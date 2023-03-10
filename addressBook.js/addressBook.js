@@ -82,7 +82,7 @@ class Contact {
 const prompt = require("prompt-sync")({sigint:true}); 
 const addressbook = new Array();
 let contact = "";
-function createContact() {
+let createContact = () => {
     let f_name = getUserInput(prompt("Eter the first name : "), "^[A-Z][a-zA-Z]{2,}");
     let l_name = getUserInput(prompt("Enter the last name : "), "^[A-Z][a-zA-Z]{2,}");
     let address = getUserInput(prompt("Enter the address : "), "[a-zA-Z\w\d\s]{3,}");
@@ -93,7 +93,7 @@ function createContact() {
     let email = getUserInput(prompt("Enter the email address : "), "^[a-zA-Z0-9]+([._+-][a-zA-Z0-9]+)*@([a-z1-9]+)([.][a-z]*)?(\.[a-z]{2,})$");
     contact = new Contact(f_name, l_name, address, city, state, zip, ph_no, email);
 }
-function getUserInput(value, regexPattern) {
+let getUserInput = (value, regexPattern) => {
     let regex = RegExp(regexPattern);
     if(regex.test(value)) {
         return value;
@@ -104,15 +104,15 @@ function getUserInput(value, regexPattern) {
         getUserInput(value, regexPattern);
     }
 }
-function addContact() {
+let addContact = () => {
     createContact();
     addressbook.push(contact);
 }
-function display() {
+let display = () => {
     console.log(addressbook.toString());
 }
 
-function search() {
+let search = () => {
     let searchByname = prompt("Enter the first name to search ");
     for(let i = 0; i < addressbook.length; i++) {
         if(searchByname == addressbook[i].getF_name) {
@@ -121,7 +121,7 @@ function search() {
     }
 }
 //uc4 search the contact by name and edit it 
-function editContact() {
+let editContact = () => {
     let i = search();
     let option2 = prompt("Edit 1. First name 2. Last name 3. Address 4. City 5. State 6. Zip code 7. Phone number 8. Email address ");
     let value = prompt("Enter the data needs to be changed ");
@@ -155,14 +155,20 @@ function editContact() {
         }
 }
 //uc5 search by name and delete the contact
-function deleteContact() {
+let deleteContact = () => {
     let i = search();
     delete addressbook[i];
     console.log("Contact has been deleted successfully");
 }
+//uc6 count the contacts using reduce()
+let countOfContacts = () => { let count = addressbook.reduce(
+    (accumulator, currentValue) => accumulator.concat(currentValue), []
+  ).filter(item => item.enabled).length;
+console.log(count+1);
+};
 // let option1 = 0;
-function menu() {
-let option1 = prompt("Menu: 1. Add Contact 2. Search By name and edit it 3. Display 4. Search By name and delete it 5. Exit ");
+let menu = () => {
+let option1 = prompt("Menu: 1. Add Contact 2. Search By name and edit it 3. Display 4. Search By name and delete it 5. Count of contacts 6. Exit ");
 switch (option1) {
     case '1':
         addContact();
@@ -180,8 +186,12 @@ switch (option1) {
         deleteContact();
         menu();
         break; 
-    case 5:
-        break;           
+    case '5':
+        countOfContacts();
+        menu();
+        break;      
+    case '6':
+        break;         
     default:
         console.log("Invalid option");
         menu();    
