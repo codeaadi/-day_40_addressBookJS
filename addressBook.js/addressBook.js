@@ -107,61 +107,81 @@ function getUserInput(value, regexPattern) {
 function addContact() {
     createContact();
     addressbook.push(contact);
+}
+function display() {
     console.log(addressbook.toString());
 }
-//uc4 search the contact by name and edit it 
-function editContact(searchByname) {
+
+function search() {
+    let searchByname = prompt("Enter the first name to search ");
     for(let i = 0; i < addressbook.length; i++) {
         if(searchByname == addressbook[i].getF_name) {
-            let option2 = prompt("Edit 1. First name 2. Last name 3. Address 4. City 5. State 6. Zip code 7. Phone number 8. Email address ");
-            let value = prompt("Enter the data needs to be changed ");
-            switch(option2) {
-                case '1':
-                    addressbook[i].setF_name = value;
-                    break;
-                case '2':
-                    addressbook[i].setL_name = value;
-                    break;
-                case '3':
-                    addressbook[i].setAddress = value;
-                    break;
-                case '4':
-                    addressbook[i].setCity = value;
-                    break;
-                case '5':
-                    addressbook[i].setState = value;
-                    break;
-                case '6':
-                    addressbook[i].setZip = value;
-                    break;
-                case '7':
-                    addressbook[i].setPh_no = value;
-                    break;
-                case '8':
-                    addressbook[i].setEmail= value;
-                    break;
-                default:
-                    console.log("Invalid option");                
-            }
+            return i;
         }
     }
 }
-let searchByname = "";
+//uc4 search the contact by name and edit it 
+function editContact() {
+    let i = search();
+    let option2 = prompt("Edit 1. First name 2. Last name 3. Address 4. City 5. State 6. Zip code 7. Phone number 8. Email address ");
+    let value = prompt("Enter the data needs to be changed ");
+        switch(option2) {
+            case '1':
+                addressbook[i].setF_name = value;
+                break;
+            case '2':
+                addressbook[i].setL_name = value;
+                break;
+            case '3':
+                addressbook[i].setAddress = value;
+                break;
+            case '4':
+                addressbook[i].setCity = value;
+                break;
+            case '5':
+                addressbook[i].setState = value;
+                break;
+            case '6':
+                addressbook[i].setZip = value;
+                break;
+            case '7':
+                addressbook[i].setPh_no = value;
+                break;
+            case '8':
+                addressbook[i].setEmail= value;
+                break;
+            default:
+            console.log("Invalid option");                
+        }
+}
+//uc5 search by name and delete the contact
+function deleteContact() {
+    let i = search();
+    delete addressbook[i];
+    console.log("Contact has been deleted successfully");
+}
 // let option1 = 0;
 function menu() {
-let option1 = prompt("Menu: 1. Add Contact 2. Search By name and edit it 3. Exit ");
+let option1 = prompt("Menu: 1. Add Contact 2. Search By name and edit it 3. Display 4. Search By name and delete it 5. Exit ");
 switch (option1) {
     case '1':
         addContact();
         menu();
         break;
     case '2':
-        searchByname = prompt("Enter the first name to search ");
-        editContact(searchByname);
+        editContact();
         menu();
         break;
     case '3':
-        break;    
+        display();
+        menu();
+        break;
+    case '4':
+        deleteContact();
+        menu();
+        break; 
+    case 5:
+        break;           
     default:
         console.log("Invalid option");
         menu();    
