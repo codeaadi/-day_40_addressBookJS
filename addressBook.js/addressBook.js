@@ -88,9 +88,10 @@ let state = getUserInput(prompt("Enter the state name : "), "[a-zA-Z\w\d\s]{3,}"
 let zip = getUserInput(prompt("Enter the zip code : "), "[0-9]{6}");
 let phoneNo = getUserInput(prompt("Enter the phone number : "), "^(91)?([ ])?[6-9]{1}[0-9]{9}$");
 let email = getUserInput(prompt("Enter the email address : "), "^[a-zA-Z0-9]+([._+-][a-zA-Z0-9]+)*@([a-z1-9]+)([.][a-z]*)?(\.[a-z]{2,})$");
+const addressbook = new Array();
+let contact = "";
 function createContact() {
-    let contact = new Contact(firstName, lastName, address, city, state, zip, phoneNo, email);
-    console.log(contact.toString());
+    contact = new Contact(f_name, l_name, address, city, state, zip, ph_no, email);
 }
 function getUserInput(value, regexPattern) {
     let regex = RegExp(regexPattern);
@@ -103,4 +104,9 @@ function getUserInput(value, regexPattern) {
         getUserInput(value, regexPattern);
     }
 }
-createContact();
+function addContact() {
+    createContact();
+    addressbook.push(contact);
+    console.log(addressbook.toString());
+}
+addContact();
